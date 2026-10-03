@@ -69,9 +69,9 @@ function normalise(raw: string): FactCheckResult {
 
 export async function runFactCheck(input: {
   claimText: string;
-  sourceUrl?: string | null;
-  imageBase64?: string | null;
-  imageMediaType?: string | null;
+  sourceUrl?: string | null | undefined;
+  imageBase64?: string | null | undefined;
+  imageMediaType?: string | null | undefined;
 }): Promise<FactCheckResult> {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) throw new Error("AI is not configured.");
