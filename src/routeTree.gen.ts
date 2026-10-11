@@ -15,9 +15,9 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
 import { Route as AuthenticatedCheckRouteImport } from './routes/_authenticated/check'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedTeamRouteImport } from './routes/_authenticated/team'
+import { Route as AuthenticatedHistoryIndexRouteImport } from './routes/_authenticated/history.index'
 import { Route as AuthenticatedHistoryIdRouteImport } from './routes/_authenticated/history.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -49,11 +49,6 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
-  id: '/history',
-  path: '/history',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
@@ -64,10 +59,16 @@ const AuthenticatedTeamRoute = AuthenticatedTeamRouteImport.update({
   path: '/team',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedHistoryIndexRoute =
+  AuthenticatedHistoryIndexRouteImport.update({
+    id: '/history/',
+    path: '/history/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedHistoryIdRoute = AuthenticatedHistoryIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AuthenticatedHistoryRoute,
+  id: '/history/$id',
+  path: '/history/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -76,10 +77,10 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AuthenticatedAnalyticsRoute
   '/check': typeof AuthenticatedCheckRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/history': typeof AuthenticatedHistoryRouteWithChildren
   '/reports': typeof AuthenticatedReportsRoute
   '/team': typeof AuthenticatedTeamRoute
   '/history/$id': typeof AuthenticatedHistoryIdRoute
+  '/history/': typeof AuthenticatedHistoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -87,10 +88,10 @@ export interface FileRoutesByTo {
   '/analytics': typeof AuthenticatedAnalyticsRoute
   '/check': typeof AuthenticatedCheckRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/history': typeof AuthenticatedHistoryRouteWithChildren
   '/reports': typeof AuthenticatedReportsRoute
   '/team': typeof AuthenticatedTeamRoute
   '/history/$id': typeof AuthenticatedHistoryIdRoute
+  '/history': typeof AuthenticatedHistoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -100,10 +101,10 @@ export interface FileRoutesById {
   '/_authenticated/analytics': typeof AuthenticatedAnalyticsRoute
   '/_authenticated/check': typeof AuthenticatedCheckRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/history': typeof AuthenticatedHistoryRouteWithChildren
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/team': typeof AuthenticatedTeamRoute
   '/_authenticated/history/$id': typeof AuthenticatedHistoryIdRoute
+  '/_authenticated/history/': typeof AuthenticatedHistoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -113,10 +114,10 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/check'
     | '/dashboard'
-    | '/history'
     | '/reports'
     | '/team'
     | '/history/$id'
+    | '/history/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -124,10 +125,10 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/check'
     | '/dashboard'
-    | '/history'
     | '/reports'
     | '/team'
     | '/history/$id'
+    | '/history'
   id:
     | '__root__'
     | '/'
@@ -136,10 +137,10 @@ export interface FileRouteTypes {
     | '/_authenticated/analytics'
     | '/_authenticated/check'
     | '/_authenticated/dashboard'
-    | '/_authenticated/history'
     | '/_authenticated/reports'
     | '/_authenticated/team'
     | '/_authenticated/history/$id'
+    | '/_authenticated/history/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -192,13 +193,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/history': {
-      id: '/_authenticated/history'
-      path: '/history'
-      fullPath: '/history'
-      preLoaderRoute: typeof AuthenticatedHistoryRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/reports': {
       id: '/_authenticated/reports'
       path: '/reports'
@@ -213,43 +207,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTeamRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/history/': {
+      id: '/_authenticated/history/'
+      path: '/history'
+      fullPath: '/history/'
+      preLoaderRoute: typeof AuthenticatedHistoryIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/history/$id': {
       id: '/_authenticated/history/$id'
-      path: '/$id'
+      path: '/history/$id'
       fullPath: '/history/$id'
       preLoaderRoute: typeof AuthenticatedHistoryIdRouteImport
-      parentRoute: typeof AuthenticatedHistoryRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
-
-interface AuthenticatedHistoryRouteChildren {
-  AuthenticatedHistoryIdRoute: typeof AuthenticatedHistoryIdRoute
-}
-
-const AuthenticatedHistoryRouteChildren: AuthenticatedHistoryRouteChildren = {
-  AuthenticatedHistoryIdRoute: AuthenticatedHistoryIdRoute,
-}
-
-const AuthenticatedHistoryRouteWithChildren =
-  AuthenticatedHistoryRoute._addFileChildren(AuthenticatedHistoryRouteChildren)
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
   AuthenticatedCheckRoute: typeof AuthenticatedCheckRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRouteWithChildren
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedTeamRoute: typeof AuthenticatedTeamRoute
+  AuthenticatedHistoryIdRoute: typeof AuthenticatedHistoryIdRoute
+  AuthenticatedHistoryIndexRoute: typeof AuthenticatedHistoryIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAnalyticsRoute: AuthenticatedAnalyticsRoute,
   AuthenticatedCheckRoute: AuthenticatedCheckRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedHistoryRoute: AuthenticatedHistoryRouteWithChildren,
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedTeamRoute: AuthenticatedTeamRoute,
+  AuthenticatedHistoryIdRoute: AuthenticatedHistoryIdRoute,
+  AuthenticatedHistoryIndexRoute: AuthenticatedHistoryIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

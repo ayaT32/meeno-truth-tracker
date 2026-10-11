@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep verification input, claims archive/detail, reports, and analytics as separate authenticated TanStack routes so each staff workflow has a shareable URL.
+- Reuse the existing checkClaim server function for AI checks and the user-scoped client for claims, report, and attachment reads/writes so existing access policies remain authoritative.
+- Keep client-safe analysis parsing, exports, and aggregates in src/lib/desk.ts and shared result/report controls in components so screens interpret saved research consistently.
