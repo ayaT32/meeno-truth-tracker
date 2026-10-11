@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Download, ScanSearch, ArrowUpRight } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
@@ -9,7 +9,7 @@ import { useClaims } from "@/lib/session";
 import { useI18n } from "@/lib/i18n";
 import { pageMeta, downloadText } from "@/lib/desk";
 
-export const Route = createFileRoute("/_authenticated/history")({
+export const Route = createFileRoute("/_authenticated/history/")({
   head: () => pageMeta("Claims history", "Search The Meeno's saved claims and verification research."),
   component: HistoryPage,
 });
