@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export function PageHeader({ eyebrow, title, actions }: { eyebrow?: string; title: string; actions?: ReactNode }) {
+export function PageHeader({ eyebrow, title, actions }: { eyebrow?: string | undefined; title: string; actions?: ReactNode }) {
   return (
     <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-border pb-6">
       <div>
