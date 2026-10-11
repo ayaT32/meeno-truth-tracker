@@ -1,0 +1,5 @@
+- [ ] Complete AI fact-check input, image attachment, and saved result flow.
+- [ ] Complete searchable claims history and claim detail.
+- [ ] Complete report creation, browsing, and export.
+- [ ] Complete analytics from saved claims and reports.
+- [ ] Verify staff flows and page rendering.
