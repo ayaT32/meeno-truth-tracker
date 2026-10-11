@@ -1,7 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHeader } from "@/components/page-header";
+import { useState } from "react";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell } from "recharts";
+import { PageHeader, StatCard } from "@/components/page-header";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DataState, useCopy } from "@/components/desk-ui";
+import { useI18n, VERDICTS, type TKey } from "@/lib/i18n";
+import { useClaims, useReports } from "@/lib/session";
+import { pageMeta, summariseClaims } from "@/lib/desk";
+import { verdictColor, VerdictBadge } from "@/components/verdict-badge";
 
 export const Route = createFileRoute("/_authenticated/analytics")({
-  head: () => ({ meta: [{ title: "analytics — The Meeno" }, { name: "description", content: "The Meeno analytics page." }, { property: "og:title", content: "analytics — The Meeno" }, { property: "og:description", content: "The Meeno analytics page." }] }),
-  component: () => <PageHeader title="analytics" />,
+  head: () => pageMeta("Analytics", "Track verification activity, claim categories, verdicts, and reporting at The Meeno."),
+  component: AnalyticsPage,
 });
+
+function AnalyticsPage() {
+  const {t,lang} = useI18n(); const c = useCopy(); const q = useClaims(); const reports = useReports(); const [range,setRange] = useState("30"); const now = new Date();
+  const rows = (q.data??[]).filter(r=>range==="all" || new Date(r.created_at).getTime() >= now.getTime()-Number(range)*864e5);
+  const stats = summariseClaims(rows); const reportCount = (reports.data??[]).filter(r=>range==="all" || new Date(r.created_at).getTime()>=now.getTime()-Number(range)*864e5).length;
+  const verdicts = VERDICTS.map(v=>({name:t(`v.${v}` as TKey),verdict:v,value:rows.filter(r=>r.verdict===v).length}));
+  const categoryMap = new Map<string,number>(); rows.forEach(r=>categoryMap.set(r.category||"Other",(categoryMap.get(r.category||"Other")??0)+1)); const categories = [...categoryMap].map(([name,value])=>({name,value})).sort((a,b)=>b.value-a.value);
+  const days = range==="7"?7:range==="90"?90:range==="all"?Math.max(30,Math.ceil((now.getTime()-Math.min(...rows.map(r=>new Date(r.created_at).getTime()),now.getTime()))/864e5)+1):30;
+  const step = days>35?Math.ceil(days/12):1; const activity = Array.from({length:Math.ceil(days/step)},(_,i)=>{const end=new Date(now);end.setHours(23,59,59,999);end.setDate(end.getDate()-(Math.ceil(days/step)-1-i)*step);const start=new Date(end);start.setDate(start.getDate()-step+1);start.setHours(0,0,0,0);return {name:end.toLocaleDateString(lang==="ar"?"ar":"en-GB",{day:"numeric",month:"short"}),value:rows.filter(r=>new Date(r.created_at)>=start&&new Date(r.created_at)<=end).length};});
+  return <div><PageHeader eyebrow={c("أداء مكتب التحقق", "DESK PERFORMANCE")} title={t("analytics")} actions={<Select value={range} onValueChange={setRange}><SelectTrigger aria-label={c("الفترة الزمنية", "Date range")} className="w-48 bg-card"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="7">{c("آخر 7 أيام", "Last 7 days")}</SelectItem><SelectItem value="30">{c("آخر 30 يوماً", "Last 30 days")}</SelectItem><SelectItem value="90">{c("آخر 90 يوماً", "Last 90 days")}</SelectItem><SelectItem value="all">{c("كل الفترات", "All time")}</SelectItem></SelectContent></Select>} />
+    {q.isLoading || q.error || reports.error ? <DataState loading={q.isLoading} error={q.error || reports.error} retry={()=>{void q.refetch();void reports.refetch();}} /> : <><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"><StatCard accent label={t("totalClaims")} value={stats.total}/><StatCard label={c("كاذب / مضلل", "False / misleading")} value={stats.flagged}/><StatCard label={t("avgConfidence")} value={stats.average===null?"—":`${stats.average}%`}/><StatCard label={t("reportsCount")} value={reports.isLoading?"—":reportCount}/></div>
+      <section className="mt-10 border-y py-6"><div className="mb-6 flex items-center justify-between"><h2 className="text-lg font-semibold">{t("overTime")}</h2><span className="text-xs text-muted-foreground">{stats.checked} {c("فحص مكتمل", "completed checks")}</span></div><div className="h-64 min-w-0" dir="ltr"><ResponsiveContainer width="100%" height="100%"><BarChart data={activity} margin={{top:10,right:10,left:-20,bottom:0}}><CartesianGrid vertical={false} stroke="var(--border)"/><XAxis dataKey="name" tick={{fill:"var(--muted-foreground)",fontSize:11}} axisLine={false} tickLine={false} minTickGap={30}/><YAxis allowDecimals={false} tick={{fill:"var(--muted-foreground)",fontSize:11}} axisLine={false} tickLine={false}/><Tooltip content={({active,payload})=>active&&payload?.length?<div className="rounded-md border bg-popover p-3 text-sm text-popover-foreground">{payload[0]?.payload.name}: {payload[0]?.value}</div>:null}/><Bar dataKey="value" fill="var(--primary)" radius={[3,3,0,0]} maxBarSize={24}/></BarChart></ResponsiveContainer></div></section>
+      <div className="grid gap-8 lg:grid-cols-2"><section className="min-w-0 py-7"><h2 className="mb-5 text-lg font-semibold">{t("byVerdict")}</h2>{rows.length?<div className="flex flex-wrap items-center gap-6"><div className="h-48 w-48 shrink-0" dir="ltr"><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={verdicts.filter(v=>v.value)} dataKey="value" innerRadius={55} outerRadius={82} paddingAngle={3} stroke="var(--background)">{verdicts.filter(v=>v.value).map(v=><Cell key={v.verdict} fill={verdictColor[v.verdict]}/>)}</Pie><Tooltip content={({active,payload})=>active&&payload?.length?<div className="rounded-md border bg-popover p-3 text-sm">{payload[0]?.name}: {payload[0]?.value}</div>:null}/></PieChart></ResponsiveContainer></div><div className="min-w-40 flex-1 space-y-3">{verdicts.map(v=><div key={v.verdict} className="flex items-center justify-between gap-3"><VerdictBadge verdict={v.verdict}/><span className="font-medium">{v.value}</span></div>)}</div></div>:<DataState empty={c("لا توجد ادعاءات في هذه الفترة", "No claims in this period")}/>}</section>
+      <section className="min-w-0 py-7"><h2 className="mb-6 text-lg font-semibold">{t("byCategory")}</h2>{categories.length?<div className="space-y-6">{categories.map(cat=><div key={cat.name}><div className="mb-2 flex justify-between text-sm"><span>{cat.name}</span><span className="text-muted-foreground">{cat.value}</span></div><div className="h-2 rounded-full bg-secondary"><svg width="100%" height="8" role="img" aria-label={`${cat.name}: ${cat.value}`}><rect width={`${cat.value/rows.length*100}%`} height="8" rx="4" fill="var(--primary)"/></svg></div></div>)}</div>:<DataState empty={c("لا توجد فئات بعد", "No categories yet")}/>}</section></div></>}
+  </div>;
+}
