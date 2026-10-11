@@ -7,7 +7,7 @@ export type Analysis = {
 };
 
 export function readAnalysis(value: unknown): Analysis {
-  const a = value && typeof value === "object" ? value as Record<string, unknown> : {};
+  const a = value && typeof value === "object" ? value as Partial<Analysis> : {};
   return {
     summary_ar: typeof a.summary_ar === "string" ? a.summary_ar : "",
     summary_en: typeof a.summary_en === "string" ? a.summary_en : "",
