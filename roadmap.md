@@ -2,4 +2,4 @@
 - [ ] Complete searchable claims history and claim detail.
 - [ ] Complete report creation, browsing, and export.
 - [ ] Complete analytics from saved claims and reports.
-- [ ] Verify staff flows and page rendering.
+- [ ] Verify staff flows and page rendering.- [x] Trending claims monitor from Arabic news & social media (Firecrawl + AI).
