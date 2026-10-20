@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { BarChart3, FileText, History, LayoutDashboard, LogOut, ScanSearch, Users, Languages } from "lucide-react";
+import { BarChart3, FileText, Flame, History, LayoutDashboard, LogOut, ScanSearch, Users, Languages } from "lucide-react";
 import type { ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
@@ -44,6 +44,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   const items = [
     { to: "/dashboard", label: t("dashboard"), icon: LayoutDashboard },
+    { to: "/trends", label: t("trends"), icon: Flame },
     { to: "/check", label: t("check"), icon: ScanSearch },
     { to: "/history", label: t("history"), icon: History },
     { to: "/reports", label: t("reports"), icon: FileText },
