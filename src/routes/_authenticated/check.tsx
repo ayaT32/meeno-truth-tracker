@@ -16,13 +16,18 @@ import { pageMeta } from "@/lib/desk";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/check")({
+  validateSearch: (s: Record<string, unknown>): { claim?: string | undefined; url?: string | undefined } => ({
+    claim: typeof s["claim"] === "string" ? s["claim"].slice(0, 10000) : undefined,
+    url: typeof s["url"] === "string" && /^https?:\/\//.test(s["url"]) ? s["url"] : undefined,
+  }),
   head: () => pageMeta("AI fact-check", "Analyse claims, screenshots, and source material at The Meeno verification desk."),
   component: CheckPage,
 });
 
 function CheckPage() {
   const { t } = useI18n(); const c = useCopy(); const { data: me } = useMe(); const qc = useQueryClient(); const run = useServerFn(checkClaim);
-  const [text,setText] = useState(""); const [source,setSource] = useState(""); const [file,setFile] = useState<File | null>(null); const [preview,setPreview] = useState("");
+  const search = Route.useSearch();
+  const [text,setText] = useState(search.claim ?? ""); const [source,setSource] = useState(search.url ?? ""); const [file,setFile] = useState<File | null>(null); const [preview,setPreview] = useState("");
   const [busy,setBusy] = useState(false); const [error,setError] = useState(""); const [result,setResult] = useState<ClaimRow | null>(null); const upload = useRef<HTMLInputElement>(null);
   async function choose(file?: File) {
     if (!file) return;

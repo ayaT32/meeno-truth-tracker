@@ -7,6 +7,7 @@ const dict = {
   tagline: { ar: "منصة التحقق الداخلية", en: "Internal verification desk" },
   dashboard: { ar: "لوحة التحكم", en: "Dashboard" },
   analytics: { ar: "التحليلات", en: "Analytics" },
+  trends: { ar: "الرائج الآن", en: "Trending" },
   check: { ar: "فحص بالذكاء الاصطناعي", en: "AI fact-check" },
   history: { ar: "سجل الادعاءات", en: "Claims history" },
   reports: { ar: "التقارير", en: "Reports" },
