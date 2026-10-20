@@ -16,7 +16,7 @@ import { pageMeta } from "@/lib/desk";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/check")({
-  validateSearch: (s: Record<string, unknown>): { claim?: string; url?: string } => ({
+  validateSearch: (s: Record<string, unknown>): { claim?: string | undefined; url?: string | undefined } => ({
     claim: typeof s["claim"] === "string" ? s["claim"].slice(0, 10000) : undefined,
     url: typeof s["url"] === "string" && /^https?:\/\//.test(s["url"]) ? s["url"] : undefined,
   }),
