@@ -10,7 +10,7 @@ import { useI18n } from "@/lib/i18n";
 import { pageMeta } from "@/lib/desk";
 
 export const Route = createFileRoute("/_authenticated/history/$id")({
-  head: () => pageMeta("Claim analysis", "Review a saved claim, its sub-claims, evidence, and AI assessment at The Meeno."),
+  head: () => pageMeta("Claim analysis", "Review a saved claim, its sub-claims, evidence, and AI assessment at Fattabyno."),
   component: ClaimPage,
 });
 

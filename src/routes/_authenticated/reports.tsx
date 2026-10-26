@@ -17,7 +17,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { pageMeta, downloadText, reportBody } from "@/lib/desk";
 
 export const Route = createFileRoute("/_authenticated/reports")({
-  head: () => pageMeta("Reports", "Create, review, and export The Meeno's internal fact-checking reports."),
+  head: () => pageMeta("Reports", "Create, review, and export Fattabyno's internal fact-checking reports."),
   component: ReportsPage,
 });
 

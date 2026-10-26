@@ -10,7 +10,7 @@ import { useI18n } from "@/lib/i18n";
 import { pageMeta, downloadText } from "@/lib/desk";
 
 export const Route = createFileRoute("/_authenticated/history/")({
-  head: () => pageMeta("Claims history", "Search The Meeno's saved claims and verification research."),
+  head: () => pageMeta("Claims history", "Search Fattabyno's saved claims and verification research."),
   component: HistoryPage,
 });
 

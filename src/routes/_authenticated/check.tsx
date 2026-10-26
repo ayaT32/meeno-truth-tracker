@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_authenticated/check")({
     claim: typeof s["claim"] === "string" ? s["claim"].slice(0, 10000) : undefined,
     url: typeof s["url"] === "string" && /^https?:\/\//.test(s["url"]) ? s["url"] : undefined,
   }),
-  head: () => pageMeta("AI fact-check", "Analyse claims, screenshots, and source material at The Meeno verification desk."),
+  head: () => pageMeta("AI fact-check", "Analyse claims, screenshots, and source material at Fattabyno verification desk."),
   component: CheckPage,
 });
 

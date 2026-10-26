@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 export type Lang = "ar" | "en";
 
 const dict = {
-  appName: { ar: "الميno", en: "The Meeno" },
+  appName: { ar: "فتبينوا", en: "Fattabyno" },
   tagline: { ar: "منصة التحقق الداخلية", en: "Internal verification desk" },
   dashboard: { ar: "لوحة التحكم", en: "Dashboard" },
   analytics: { ar: "التحليلات", en: "Analytics" },
@@ -95,7 +95,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     setLangState(l);
   };
   const t = (k: TKey) => {
-    if (k === "appName") return lang === "ar" ? "الميـنو" : "The Meeno";
+    if (k === "appName") return lang === "ar" ? "فتبينوا" : "Fattabyno";
     return dict[k]?.[lang] ?? k;
   };
   return (

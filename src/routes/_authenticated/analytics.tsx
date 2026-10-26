@@ -10,7 +10,7 @@ import { pageMeta, summariseClaims } from "@/lib/desk";
 import { verdictColor, VerdictBadge } from "@/components/verdict-badge";
 
 export const Route = createFileRoute("/_authenticated/analytics")({
-  head: () => pageMeta("Analytics", "Track verification activity, claim categories, verdicts, and reporting at The Meeno."),
+  head: () => pageMeta("Analytics", "Track verification activity, claim categories, verdicts, and reporting at Fattabyno."),
   component: AnalyticsPage,
 });
 
