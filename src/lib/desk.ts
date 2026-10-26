@@ -18,7 +18,7 @@ export function readAnalysis(value: unknown): Analysis {
 }
 
 export function pageMeta(title: string, description: string) {
-  return { meta: [{ title: `${title} — The Meeno` }, { name: "description", content: description }, { property: "og:title", content: `${title} — The Meeno` }, { property: "og:description", content: description }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] };
+  return { meta: [{ title: `${title} — Fattabyno` }, { name: "description", content: description }, { property: "og:title", content: `${title} — Fattabyno` }, { property: "og:description", content: description }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] };
 }
 
 export function downloadText(name: string, text: string, type = "text/plain;charset=utf-8") {
@@ -28,7 +28,7 @@ export function downloadText(name: string, text: string, type = "text/plain;char
 
 export function reportBody(claim: ClaimRow, lang: "ar" | "en") {
   const a = readAnalysis(claim.analysis);
-  return ["The Meeno", claim.claim_text, `${claim.verdict ?? "unverifiable"} · ${claim.confidence ?? 0}%`, lang === "ar" ? a.summary_ar || claim.summary : a.summary_en || claim.summary, ...a.sub_claims.map(c => `${c.statement}\n${c.verdict}\n${c.explanation}`), a.red_flags.join("\n"), a.suggested_sources.join("\n"), claim.source_url, lang === "ar" ? "نتيجة آلية أولية — تتطلب مراجعة تحريرية قبل النشر." : "Preliminary AI assessment — editorial review required before publication."].filter(Boolean).join("\n\n");
+  return ["Fattabyno", claim.claim_text, `${claim.verdict ?? "unverifiable"} · ${claim.confidence ?? 0}%`, lang === "ar" ? a.summary_ar || claim.summary : a.summary_en || claim.summary, ...a.sub_claims.map(c => `${c.statement}\n${c.verdict}\n${c.explanation}`), a.red_flags.join("\n"), a.suggested_sources.join("\n"), claim.source_url, lang === "ar" ? "نتيجة آلية أولية — تتطلب مراجعة تحريرية قبل النشر." : "Preliminary AI assessment — editorial review required before publication."].filter(Boolean).join("\n\n");
 }
 
 export function summariseClaims(claims: ClaimRow[]) {

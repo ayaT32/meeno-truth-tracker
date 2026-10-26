@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — The Meeno" },
-      { name: "description", content: "Overview of claims and reports at The Meeno." },
-      { property: "og:title", content: "Dashboard — The Meeno" },
-      { property: "og:description", content: "Overview of claims and reports at The Meeno." },
+      { title: "Dashboard — Fattabyno" },
+      { name: "description", content: "Overview of claims and reports at Fattabyno." },
+      { property: "og:title", content: "Dashboard — Fattabyno" },
+      { property: "og:description", content: "Overview of claims and reports at Fattabyno." },
     ],
   }),
   component: Dashboard,

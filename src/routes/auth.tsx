@@ -13,10 +13,10 @@ export const Route = createFileRoute("/auth")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Sign in — The Meeno" },
-      { name: "description", content: "Staff and management sign-in for The Meeno fact-checking desk." },
-      { property: "og:title", content: "Sign in — The Meeno" },
-      { property: "og:description", content: "Staff and management sign-in for The Meeno fact-checking desk." },
+      { title: "Sign in — Fattabyno" },
+      { name: "description", content: "Staff and management sign-in for Fattabyno fact-checking desk." },
+      { property: "og:title", content: "Sign in — Fattabyno" },
+      { property: "og:description", content: "Staff and management sign-in for Fattabyno fact-checking desk." },
     ],
   }),
   beforeLoad: async () => {

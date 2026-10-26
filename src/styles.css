@@ -4,7 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* The Meeno design system — warm newsroom: beige paper, white sheets, burnt-orange ink. */
+/* Fattabyno design system — warm newsroom: beige paper, white sheets, burnt-orange ink. */
 
 @theme inline {
   --font-display: "Readex Pro", "IBM Plex Sans Arabic", system-ui, sans-serif;

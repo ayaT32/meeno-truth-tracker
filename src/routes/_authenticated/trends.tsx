@@ -12,7 +12,7 @@ import { pageMeta } from "@/lib/desk";
 import { getTrends } from "@/lib/trends.functions";
 
 export const Route = createFileRoute("/_authenticated/trends")({
-  head: () => pageMeta("Trending claims", "Spot trending claims from Arabic news and social media and start verifying them at The Meeno."),
+  head: () => pageMeta("Trending claims", "Spot trending claims from Arabic news and social media and start verifying them at Fattabyno."),
   component: TrendsPage,
 });
 

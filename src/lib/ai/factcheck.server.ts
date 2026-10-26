@@ -16,7 +16,7 @@ export type FactCheckResult = {
   suggested_sources: string[];
 };
 
-const SYSTEM = `You are a senior Arabic-language fact-checker at The Meeno, a professional Arabic fact-checking organisation.
+const SYSTEM = `You are a senior Arabic-language fact-checker at Fattabyno, a professional Arabic fact-checking organisation.
 Analyse the claim provided (text, optional source page content, optional image). Break it into its distinct checkable sub-claims and assess each one.
 Use only these verdict values: "true", "false", "misleading", "partly_true", "unverifiable".
 Be honest about uncertainty: if you cannot verify from your knowledge, use "unverifiable" and say what evidence is needed.
@@ -30,7 +30,7 @@ Keep at most 6 sub_claims, 6 red_flags and 6 suggested_sources.`;
 
 async function fetchPageText(url: string): Promise<string | null> {
   try {
-    const res = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0 MeenoFactCheck" }, redirect: "follow" });
+    const res = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0 FattabynoFactCheck" }, redirect: "follow" });
     if (!res.ok) return null;
     const html = await res.text();
     const text = html
