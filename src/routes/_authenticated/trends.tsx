@@ -30,7 +30,7 @@ function TrendsPage() {
     {m.isPending ? <DataState loading /> : m.error ? <DataState error={m.error} retry={() => m.mutate()} /> : !m.data ? <DataState empty={c("اضغط «رصد الآن» لجمع الادعاءات الأكثر تداولاً في الأخبار ومواقع التواصل العربية.", "Press “Scan now” to gather the most-shared claims from Arabic news and social media.")} /> : <>
       <div className="grid gap-4 sm:grid-cols-3"><StatCard accent label={c("ادعاءات رائجة", "Trending claims")} value={items.length} /><StatCard label={c("أعلى أولوية", "Top priority")} value={top ? `${top.priority}` : "—"} /><StatCard label={c("آخر رصد", "Last scan")} value={new Date(m.data.fetchedAt).toLocaleTimeString()} /></div>
       {items.length === 0 ? <DataState empty={c("لم يُعثر على ادعاءات قابلة للتحقق", "No checkable claims found")} /> : <ol className="mt-8 divide-y border-y">{items.map((it, i) => <li key={i} className="grid gap-4 py-6 md:grid-cols-[3rem_1fr_auto]">
-        <span className="font-display text-2xl text-primary">{String(i + 1).padStart(2, "0")}</span>
+        <span className="font-sans text-2xl font-bold tabular-nums text-gold-ink">{String(i + 1).padStart(2, "0")}</span>
         <div className="min-w-0 space-y-2">
           <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground"><span className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-2 py-0.5 font-medium text-accent-foreground"><Flame className="size-3" />{it.priority}</span><span>{it.topic}</span><span>·</span><span>{it.category}</span><span>·</span><span>{it.mentions} {c("مصادر", "sources")}</span></div>
           <h2 className="text-base font-semibold leading-8" dir="auto">{it.claim}</h2>
