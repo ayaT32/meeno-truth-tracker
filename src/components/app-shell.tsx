@@ -10,7 +10,7 @@ export function Logo({ light }: { light?: boolean }) {
   const { t } = useI18n();
   return (
     <div className="flex items-center gap-2.5">
-      <div className="grid size-9 place-items-center rounded-xl bg-ember font-display text-lg font-bold text-primary-foreground">م</div>
+      <div className="grid size-10 place-items-center rounded-lg bg-gold font-display text-xl font-bold text-gold-foreground">ف</div>
       <div className="leading-tight">
         <p className={light ? "font-display text-base font-semibold text-sidebar-foreground" : "font-display text-base font-semibold text-ink"}>{t("appName")}</p>
         <p className={light ? "text-[11px] text-sidebar-foreground/60" : "text-[11px] text-muted-foreground"}>{t("tagline")}</p>
@@ -95,6 +95,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
+        <div className="no-print h-1.5 bg-gold" />
         <header className="no-print flex items-center justify-between gap-2 border-b border-border bg-card px-4 py-3 md:hidden">
           <Logo />
           <div className="flex gap-2">

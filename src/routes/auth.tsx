@@ -80,7 +80,7 @@ function AuthPage() {
           </p>
           <p className="mt-6 max-w-sm text-ink-foreground/70">{t("staffOnly")}</p>
         </div>
-        <div className="h-1.5 w-24 rounded-full bg-ember" />
+        <div className="h-1.5 w-24 rounded-full bg-gold" />
       </div>
       <div className="flex flex-col items-center justify-center p-6">
         <div className="mb-6 flex w-full max-w-sm items-center justify-between md:justify-end">
