@@ -2,11 +2,11 @@ import { cn } from "@/lib/utils";
 import { useI18n, type TKey } from "@/lib/i18n";
 
 const styles: Record<string, string> = {
-  true: "bg-verdict-true/15 text-verdict-true ring-verdict-true/30",
-  false: "bg-verdict-false/15 text-verdict-false ring-verdict-false/30",
-  misleading: "bg-verdict-misleading/15 text-verdict-misleading ring-verdict-misleading/30",
-  partly_true: "bg-verdict-partly/20 text-accent-foreground ring-verdict-partly/40",
-  unverifiable: "bg-verdict-unverifiable/15 text-muted-foreground ring-verdict-unverifiable/30",
+  true: "bg-verdict-true text-primary-foreground ring-verdict-true",
+  false: "bg-verdict-false text-primary-foreground ring-verdict-false",
+  misleading: "bg-verdict-misleading text-primary-foreground ring-verdict-misleading",
+  partly_true: "bg-verdict-partly text-gold-foreground ring-verdict-partly",
+  unverifiable: "bg-verdict-unverifiable text-primary-foreground ring-verdict-unverifiable",
 };
 
 export function VerdictBadge({ verdict, className }: { verdict?: string | null; className?: string }) {
